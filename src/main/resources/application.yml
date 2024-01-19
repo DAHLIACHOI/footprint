@@ -19,10 +19,6 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
-  data:
-    redis:
-      port: 6379
-      host: localhost
 
 logging.level:
   org.hibernate.SQL: debug
