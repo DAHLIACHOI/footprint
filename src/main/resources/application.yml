@@ -1,0 +1,28 @@
+server:
+  port: 8081
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  profiles:
+    include: database
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+  data:
+    redis:
+      port: 6379
+      host: localhost
+
+logging.level:
+  org.hibernate.SQL: debug
