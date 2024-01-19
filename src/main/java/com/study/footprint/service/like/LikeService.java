@@ -1,4 +1,4 @@
-package com.study.footprint.service.likes;
+package com.study.footprint.service.like;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

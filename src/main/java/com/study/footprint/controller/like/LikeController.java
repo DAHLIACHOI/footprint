@@ -1,6 +1,6 @@
 package com.study.footprint.controller.like;
 
-import com.study.footprint.service.likes.LikeService;
+import com.study.footprint.service.like.LikeService;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
