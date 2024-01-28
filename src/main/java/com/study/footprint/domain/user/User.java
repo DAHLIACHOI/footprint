@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -49,9 +47,6 @@ public class User extends BaseEntity {
 
     private Boolean isDeleted; //탈퇴여부
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
@@ -74,7 +69,7 @@ public class User extends BaseEntity {
     @Builder
     public User(Long id, String email, String nickname, String password, String profileImageUrl,
                 Integer reportedCount, LocalDateTime bannedDate, Boolean certified, Boolean isDeleted,
-                Set<Authority> authorities, List<Comment> comments, List<Posting> postings,
+                List<Comment> comments, List<Posting> postings,
                 List<Like> likes, List<Report> reports) {
         this.id = id;
         this.email = email;
@@ -85,7 +80,6 @@ public class User extends BaseEntity {
         this.bannedDate = bannedDate;
         this.certified = certified;
         this.isDeleted = isDeleted;
-        this.authorities = authorities;
         this.comments = comments;
         this.postings = postings;
         this.likes = likes;
