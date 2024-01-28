@@ -1,19 +1,16 @@
 ---
 name: "✅ FEATURE"
-about: Suggest an idea for this project
+about: 작업 사항을 작성해주세요.
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-# feature 
+# Feature 
 
 # Description
-설명
 
 # Todo
-[] todo
 
 # ETC
-기타
