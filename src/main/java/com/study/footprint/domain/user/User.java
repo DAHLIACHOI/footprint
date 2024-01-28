@@ -1,5 +1,6 @@
 package com.study.footprint.domain.user;
 
+import com.study.footprint.common.converter.StringCryptoUniqueConverter;
 import com.study.footprint.domain.BaseEntity;
 import com.study.footprint.domain.comment.Comment;
 import com.study.footprint.domain.like.Like;
@@ -27,10 +28,15 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 496)
+    @Convert(converter = StringCryptoUniqueConverter.class)
     private String email;
 
+    @Column(nullable = false, length = 200)
+    @Convert(converter = StringCryptoUniqueConverter.class)
     private String nickname;
 
+    @Column(nullable = false, length = 100)
     private String password;
 
     private String profileImageUrl;
@@ -40,6 +46,8 @@ public class User extends BaseEntity {
     private LocalDateTime bannedDate;
 
     private Boolean certified;
+
+    private Boolean isDeleted; //탈퇴여부
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
@@ -60,10 +68,14 @@ public class User extends BaseEntity {
     public void prePersist() {
         this.reportedCount = this.reportedCount == null ? 0 : this.reportedCount;
         this.certified = this.certified == null ? false : this.certified;
+        this.isDeleted = this.isDeleted == null ? false : this.isDeleted;
     }
 
     @Builder
-    public User(Long id, String email, String nickname, String password, String profileImageUrl, Integer reportedCount, LocalDateTime bannedDate, Boolean certified, Set<Authority> authorities, List<Comment> comments, List<Posting> postings, List<Like> likes, List<Report> reports) {
+    public User(Long id, String email, String nickname, String password, String profileImageUrl,
+                Integer reportedCount, LocalDateTime bannedDate, Boolean certified, Boolean isDeleted,
+                Set<Authority> authorities, List<Comment> comments, List<Posting> postings,
+                List<Like> likes, List<Report> reports) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -72,6 +84,7 @@ public class User extends BaseEntity {
         this.reportedCount = reportedCount;
         this.bannedDate = bannedDate;
         this.certified = certified;
+        this.isDeleted = isDeleted;
         this.authorities = authorities;
         this.comments = comments;
         this.postings = postings;
