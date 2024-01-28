@@ -7,18 +7,13 @@ assignees: ''
 
 ---
 
-# Issue : ✅ FEATURE
-feature 작업 사항
----
+# feature 
 
 # Description
----
 설명
 
 # Todo
----
 [] todo
 
 # ETC
----
 기타
