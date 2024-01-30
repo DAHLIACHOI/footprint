@@ -18,8 +18,8 @@ permissions:
   contents: read
 
 jobs: # 병렬로 실행되는 작업 단위, 여러 step으로 이루어짐
-  # dev
-  dev-deploy:
+  # prod
+  prod-deploy:
     if: contains(github.ref, 'main')
     name: Deploy
     runs-on: ubuntu-latest
@@ -73,13 +73,13 @@ jobs: # 병렬로 실행되는 작업 단위, 여러 step으로 이루어짐
     - name: Copy jar and yml To Delpoy DIR
       run: |
         cp ./build/libs/footprint-0.0.1-SNAPSHOT.jar ./prod-footprint-deploy
-        cp ./.github/scripts/prod/devappsepc.yml ./prod-footprint-deploy/appspec.yml
-        cp ./.github/scripts/prod/devdeploycmshomepage.sh ./prod-footprint-deploy/deploycmshomepage.sh
-        cp ./.github/scripts/prod/devhealth.sh ./prod-footprint-deploy/health.sh
-        cp ./.github/scripts/prod/devprofile.sh ./prod-footprint-deploy/profile.sh
-        cp ./.github/scripts/prod/devstart.sh ./prod-footprint-deploy/start.sh
-        cp ./.github/scripts/prod/devstop.sh ./prod-footprint-deploy/stop.sh
-        cp ./.github/scripts/prod/devswitch.sh ./prod-footprint-deploy/switch.sh
+        cp ./.github/scripts/prod/prodappsepc.yml ./prod-footprint-deploy/appspec.yml
+        cp ./.github/scripts/prod/proddeployfootprint.sh ./prod-footprint-deploy/deployfootprint.sh
+        cp ./.github/scripts/prod/prodhealth.sh ./prod-footprint-deploy/health.sh
+        cp ./.github/scripts/prod/prodprofile.sh ./prod-footprint-deploy/profile.sh
+        cp ./.github/scripts/prod/prodstart.sh ./prod-footprint-deploy/start.sh
+        cp ./.github/scripts/prod/prodstop.sh ./prod-footprint-deploy/stop.sh
+        cp ./.github/scripts/prod/prodswitch.sh ./prod-footprint-deploy/switch.sh
         chmod +x ./prod-footprint-deploy
       shell: bash
 
@@ -105,7 +105,7 @@ jobs: # 병렬로 실행되는 작업 단위, 여러 step으로 이루어짐
       run: |
         cd ./prod-footprint-deploy
         ZIP_FILENAME="$(date '+%Y%m%d')_$GITHUB_SHA"
-        aws s3 cp --region ${{ env.AWS_REGION }} ./"$ZIP_FILENAME".zip s3://${{ env.S3_BUCKET_NAME }}/${{ env.DEV_S3_BUCKET_DIR }}/"$ZIP_FILENAME".zip
+        aws s3 cp --region ${{ env.AWS_REGION }} ./"$ZIP_FILENAME".zip s3://${{ env.S3_BUCKET_NAME }}/${{ env.PROD_S3_BUCKET_DIR }}/"$ZIP_FILENAME".zip
 
     # (12) S3 버킷에 있는 파일을 대상으로 CodeDeploy 실행
     # --application-name: CodeDeploy 애플리케이션 이름
@@ -115,4 +115,4 @@ jobs: # 병렬로 실행되는 작업 단위, 여러 step으로 이루어짐
     - name: Deploy to AWS EC2 from S3
       run: |
         ZIP_FILENAME="$(date '+%Y%m%d')_$GITHUB_SHA"
-        aws deploy create-deployment --application-name $PROD_CODE_DEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $DEV_CODE_DEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=prod/"$ZIP_FILENAME".zip
+        aws deploy create-deployment --application-name $PROD_CODE_DEPLOY_APPLICATION_NAME --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name $PROD_CODE_DEPLOY_DEPLOYMENT_GROUP_NAME --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=prod/"$ZIP_FILENAME".zip
