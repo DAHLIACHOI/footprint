@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ec2-user/footprint/build
+    destination: /home/ec2-user/footprint/build/
     overwrite: yes
 
 permissions:
