@@ -1,8 +1,8 @@
 package com.study.footprint.domain.like;
 
 import com.study.footprint.domain.BaseEntity;
+import com.study.footprint.domain.member.Member;
 import com.study.footprint.domain.posting.Posting;
-import com.study.footprint.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,12 +24,13 @@ public class Like extends BaseEntity {
     private Posting posting;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
-    public Like(Posting posting, User user) {
+    public Like(Long id, Posting posting, Member member) {
+        this.id = id;
         this.posting = posting;
-        this.user = user;
+        this.member = member;
     }
 }

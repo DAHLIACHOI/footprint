@@ -1,4 +1,4 @@
-package com.study.footprint.service.users;
+package com.study.footprint.service.member;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

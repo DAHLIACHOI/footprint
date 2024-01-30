@@ -1,0 +1,15 @@
+spring:
+  config:
+    activate:
+      on-profile: local-1
+server:
+  port: 9021
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type:
+          descriptor:
+            sql: trace
