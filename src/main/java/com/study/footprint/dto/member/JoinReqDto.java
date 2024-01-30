@@ -1,4 +1,4 @@
-package com.study.footprint.dto.user;
+package com.study.footprint.dto.member;
 
 import jakarta.validation.constraints.Pattern;
 import lombok.Builder;

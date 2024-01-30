@@ -30,7 +30,8 @@ public class Report extends BaseEntity {
     private Long reportedUserId;
 
     @Builder
-    public Report(ReportTargetTypeCd reportTargetTypeCd, ReportReasonTypeCd reportReasonTypeCd, Long targetId, Long reportedUserId) {
+    public Report(Long id, ReportTargetTypeCd reportTargetTypeCd, ReportReasonTypeCd reportReasonTypeCd, Long targetId, Long reportedUserId) {
+        this.id = id;
         this.reportTargetTypeCd = reportTargetTypeCd;
         this.reportReasonTypeCd = reportReasonTypeCd;
         this.targetId = targetId;

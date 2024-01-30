@@ -1,8 +1,8 @@
 package com.study.footprint.domain.comment;
 
 import com.study.footprint.domain.BaseEntity;
+import com.study.footprint.domain.member.Member;
 import com.study.footprint.domain.posting.Posting;
-import com.study.footprint.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,17 +21,18 @@ public class Comment extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "posting_id")
     private Posting posting;
 
     @Builder
-    public Comment(String content, User user, Posting posting) {
+    public Comment(Long id, String content, Member member, Posting posting) {
+        this.id = id;
         this.content = content;
-        this.user = user;
+        this.member = member;
         this.posting = posting;
     }
 

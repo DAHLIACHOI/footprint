@@ -1,11 +1,10 @@
-package com.study.footprint.domain.user;
+package com.study.footprint.domain.member;
 
 import com.study.footprint.common.converter.StringCryptoUniqueConverter;
 import com.study.footprint.domain.BaseEntity;
 import com.study.footprint.domain.comment.Comment;
 import com.study.footprint.domain.like.Like;
 import com.study.footprint.domain.posting.Posting;
-import com.study.footprint.domain.report.Report;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -18,9 +17,8 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "users")
 @Entity
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,17 +45,14 @@ public class User extends BaseEntity {
 
     private Boolean isDeleted; //탈퇴여부
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Posting> postings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Report> reports = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
@@ -67,10 +62,10 @@ public class User extends BaseEntity {
     }
 
     @Builder
-    public User(Long id, String email, String nickname, String password, String profileImageUrl,
+    public Member(Long id, String email, String nickname, String password, String profileImageUrl,
                 Integer reportedCount, LocalDateTime bannedDate, Boolean certified, Boolean isDeleted,
                 List<Comment> comments, List<Posting> postings,
-                List<Like> likes, List<Report> reports) {
+                List<Like> likes) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
@@ -83,7 +78,6 @@ public class User extends BaseEntity {
         this.comments = comments;
         this.postings = postings;
         this.likes = likes;
-        this.reports = reports;
     }
 
 }

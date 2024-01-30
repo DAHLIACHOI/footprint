@@ -3,8 +3,8 @@ package com.study.footprint.domain.posting;
 import com.study.footprint.domain.BaseEntity;
 import com.study.footprint.domain.comment.Comment;
 import com.study.footprint.domain.like.Like;
+import com.study.footprint.domain.member.Member;
 import com.study.footprint.domain.place.Place;
-import com.study.footprint.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -45,8 +45,8 @@ public class Posting extends BaseEntity {
     private Place place;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @PrePersist
     public void prePersist() {
@@ -55,7 +55,7 @@ public class Posting extends BaseEntity {
     }
 
     @Builder
-    public Posting(Long id, String content, String imageUrl, LocalDateTime recordDate, Boolean isPublic, Boolean isPosting, Place place, User user) {
+    public Posting(Long id, String content, String imageUrl, LocalDateTime recordDate, Boolean isPublic, Boolean isPosting, Place place, Member member) {
         this.id = id;
         this.content = content;
         this.imageUrl = imageUrl;
@@ -63,6 +63,6 @@ public class Posting extends BaseEntity {
         this.isPublic = isPublic;
         this.isPosting = isPosting;
         this.place = place;
-        this.user = user;
+        this.member = member;
     }
 }

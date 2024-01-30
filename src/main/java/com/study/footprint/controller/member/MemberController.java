@@ -1,7 +1,7 @@
-package com.study.footprint.controller.user;
+package com.study.footprint.controller.member;
 
-import com.study.footprint.dto.user.JoinReqDto;
-import com.study.footprint.service.users.UserService;
+import com.study.footprint.dto.member.JoinReqDto;
+import com.study.footprint.service.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-public class UserController {
+public class MemberController {
 
-    private final UserService userService;
+    private final MemberService memberService;
 
     @Builder
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
     }
 
 
@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<String> join(@Valid @RequestBody JoinReqDto joinReqDto){
 
         try {
-            userService.join(joinReqDto);
+            memberService.join(joinReqDto);
 
         } catch (Exception e) {
             log.error("회원 가입 실패 : ", e);

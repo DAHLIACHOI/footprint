@@ -1,6 +1,6 @@
-package com.study.footprint.controller.user;
+package com.study.footprint.controller.member;
 
-import com.study.footprint.service.users.AuthService;
+import com.study.footprint.service.member.AuthService;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
