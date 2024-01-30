@@ -8,7 +8,9 @@ server:
 
 spring:
   profiles:
-    include: database
+    include:
+      - database
+      - security
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
