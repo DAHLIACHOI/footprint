@@ -10,5 +10,5 @@ import java.util.List;
 @Getter
 @Component
 public class ConfigUtil {
-    private final List<String> SERVICE_PROFILE_LIST = new ArrayList<>(Arrays.asList("local-1", "local-2", "prod-1", "prod-2"));
+    private final List<String> SERVICE_PROFILE_LIST = new ArrayList<>(Arrays.asList("local-1", "local-2", "dev-1", "dev-2"));
 }
