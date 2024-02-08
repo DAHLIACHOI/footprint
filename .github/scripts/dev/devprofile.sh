@@ -10,16 +10,16 @@ function find_sleep_profile()
 
     if [ ${RESPONSE_CODE} -ge 400 ] # 400 보다 크면 (즉, 40x/50x 에러 모두 포함)
     then
-        CURRENT_PROFILE=dev-2 # 정상적으로 수행 중이지 않을 경우
+        CURRENT_PROFILE="dev-2" # 정상적으로 수행 중이지 않을 경우
     else
         CURRENT_PROFILE=$(curl -k -s https://localhost/profile)
     fi
 
     if [ "${CURRENT_PROFILE}" == "dev-1" ]
     then
-      IDLE_PROFILE=dev-2 # 엔진엑스랑 연결되지 않은 profile
+      IDLE_PROFILE="dev-2" # 엔진엑스랑 연결되지 않은 profile
     else
-      IDLE_PROFILE=dev-1
+      IDLE_PROFILE="dev-1"
     fi
 
     echo "${IDLE_PROFILE}" # 마지막에 echo를 통해 출력하여 클라이언트가 값을 사용할 수 있도록 한다
