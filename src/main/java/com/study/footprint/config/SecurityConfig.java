@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(
-                        registry -> registry.requestMatchers("/", "/join/**", "/login/**", "/profile")
+                        registry -> registry.requestMatchers("/", "/join/**", "/login/**", "/profile", "/css/**","/images/**","/js/**","/h2-console/**","/favicon.ico")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
