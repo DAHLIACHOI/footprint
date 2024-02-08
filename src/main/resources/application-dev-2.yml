@@ -1,9 +1,9 @@
 spring:
   config:
     activate:
-      on-profile: prod-1
+      on-profile: dev-1
 server:
-  port: 9021
+  port: 9022
 
 logging:
   level:
