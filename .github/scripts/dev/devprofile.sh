@@ -15,7 +15,7 @@ function find_sleep_profile()
         CURRENT_PROFILE=$(curl -k -s https://localhost/profile)
     fi
 
-    if [ ${CURRENT_PROFILE} == dev-1 ]
+    if [ "${CURRENT_PROFILE}" == "dev-1" ]
     then
       IDLE_PROFILE=dev-2 # 엔진엑스랑 연결되지 않은 profile
     else
@@ -30,7 +30,7 @@ function find_sleep_port()
 {
     IDLE_PROFILE=$(find_sleep_profile)
 
-    if [ ${IDLE_PROFILE} == dev-1 ]
+    if [ "${IDLE_PROFILE}" == "dev-1" ]
     then
       echo "9021"
     else
