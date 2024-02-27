@@ -1,0 +1,11 @@
+successResult:
+    code: "200"
+    msg: "성공하였습니다."
+
+failResult:
+    code: "-1"
+    msg: "실패하였습니다."
+
+userNotFound:
+    code: "-4000"
+    msg: "일치하는 회원정보가 없습니다."

@@ -1,0 +1,11 @@
+successResult:
+  code: "200"
+  msg: "Success."
+
+failResult:
+  code: "-1"
+  msg: "Fail."
+
+userNotFound:
+  code: "-4000"
+  msg: "User information does not exist."
