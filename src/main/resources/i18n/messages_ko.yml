@@ -21,3 +21,7 @@ notEmailFormat:
 notPasswordFormat:
     code: "-4003"
     msg: "유효하지 않은 비밀번호 형식입니다. 비밀번호는 8~16자리의 영문 대소문자와 숫자로만 입력해 주세요."
+
+duplicationNickName:
+    code: "-4004"
+    msg: "이미 사용중인 닉네임입니다."

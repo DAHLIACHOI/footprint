@@ -21,3 +21,7 @@ notEmailFormat:
 notPasswordFormat:
     code: "-4003"
     msg: "Invalid password format. Please enter only 8~16 characters of English uppercase and lowercase letters and numbers."
+
+duplicationNickName:
+    code: "-4004"
+    msg: "This is a nickname that has already been signed up."

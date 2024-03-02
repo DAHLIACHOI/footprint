@@ -45,10 +45,10 @@ public class ResponseService {
         return result;
     }
 
-    public CommonResult getFailResult(Exception e) {
+    public CommonResult getFailResult(String exception) {
         CommonResult result = new CommonResult();
-        result.setCode(Integer.parseInt(messageSource.getMessage(e.getMessage() + ".code", null, LocaleContextHolder.getLocale())));
-        result.setMsg(messageSource.getMessage(e.getMessage() + ".msg", null, LocaleContextHolder.getLocale()));
+        result.setCode(Integer.parseInt(messageSource.getMessage(exception + ".code", null, LocaleContextHolder.getLocale())));
+        result.setMsg(messageSource.getMessage(exception + ".msg", null, LocaleContextHolder.getLocale()));
         return result;
     }
     /**

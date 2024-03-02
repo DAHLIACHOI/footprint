@@ -1,5 +1,7 @@
 package com.study.footprint.service.member;
 
+import com.study.footprint.common.exception.CommonConflictException;
+import com.study.footprint.common.exception.CommonNotFoundException;
 import com.study.footprint.common.response.SingleResult;
 import com.study.footprint.domain.member.Member;
 import com.study.footprint.domain.member.MemberRepository;
@@ -29,6 +31,9 @@ public class MemberService {
         // 이미 가입된 멤버인지 확인
         validExistMember(joinReqDto);
 
+        // 사용가능한 닉네임인지 확인
+        validUsingNickName(joinReqDto);
+
         Member member = Member.builder()
                 .email(joinReqDto.getEmail())
                 .password(joinReqDto.getPassword())
@@ -47,11 +52,17 @@ public class MemberService {
 
     private void validExistMember(JoinReqDto joinReqDto) {
         if (memberRepository.existsByEmail(joinReqDto.getEmail())) {
-            throw new IllegalArgumentException("duplicationUser");
+            throw new CommonConflictException("duplicationUser");
+        }
+    }
+
+    private void validUsingNickName(JoinReqDto joinReqDto) {
+        if (memberRepository.existsByNickName(joinReqDto.getNickName())) {
+            throw new CommonConflictException("duplicationNickName");
         }
     }
 
     private Member findMemberByEmail(String email) {
-        return memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("userNotFound"));
+        return memberRepository.findByEmail(email).orElseThrow(() -> new CommonNotFoundException("userNotFound"));
     }
 }

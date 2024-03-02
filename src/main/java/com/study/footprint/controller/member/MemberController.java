@@ -31,8 +31,6 @@ public class MemberController {
     @PostMapping("/v1/join")
     public ResponseEntity<SingleResult<JoinResDto>> join(@Valid @RequestBody JoinReqDto joinReqDto) {
 
-        SingleResult<JoinResDto> result = null;
-
 //        if (errors.hasErrors()) {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 //        }
@@ -40,18 +38,10 @@ public class MemberController {
         // 비밀번호 암호화
         joinReqDto.encodePassword(passwordEncoder, joinReqDto.getPassword());
 
-        try {
-            result = memberService.join(joinReqDto);
+        SingleResult<JoinResDto> result = memberService.join(joinReqDto);
 
-        } catch (Exception e) {
-            log.error("회원 가입 실패 : " + e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-        } finally {
-            //비밀번호 초기화 (보안상 목적)
-            joinReqDto.deletePassword();
-
-        }
+        //비밀번호 초기화 (보안상 목적)
+        joinReqDto.deletePassword();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

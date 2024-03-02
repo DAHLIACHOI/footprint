@@ -11,10 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor
 public class JoinReqDto {
 
-    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "{notEmailFormat.msg}")
+    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "notEmailFormat")
     private String email;
 
-    @Pattern(regexp = "^([a-zA-Z0-9]{8,16})$", message = "{notPasswordFormat.msg}")
+    @Pattern(regexp = "^([a-zA-Z0-9]{8,16})$", message = "notPasswordFormat")
     private String password;
 
     private String nickName;
