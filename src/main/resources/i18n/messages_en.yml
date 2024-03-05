@@ -1,0 +1,27 @@
+successResult:
+  code: "200"
+  msg: "Success."
+
+failResult:
+  code: "-1"
+  msg: "Fail."
+
+userNotFound:
+  code: "-4000"
+  msg: "User information does not exist."
+
+duplicationUser:
+  code: "-4001"
+  msg: "This is an email that has already been signed up."
+
+notEmailFormat:
+  code: "-4002"
+  msg: "Invalid email format."
+
+notPasswordFormat:
+    code: "-4003"
+    msg: "Invalid password format. Please enter only 8~16 characters of English uppercase and lowercase letters and numbers."
+
+duplicationNickName:
+    code: "-4004"
+    msg: "This is a nickname that has already been signed up."

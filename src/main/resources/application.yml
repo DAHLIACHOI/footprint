@@ -11,6 +11,9 @@ spring:
     include:
       - database
       - security
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:

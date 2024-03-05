@@ -1,11 +1,15 @@
 package com.study.footprint.controller.member;
 
+import com.study.footprint.common.response.SingleResult;
 import com.study.footprint.dto.member.JoinReqDto;
+import com.study.footprint.dto.member.JoinResDto;
 import com.study.footprint.service.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,24 +19,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
     @Builder
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
-    @PostMapping("/join")
-    public ResponseEntity<String> join(@Valid @RequestBody JoinReqDto joinReqDto){
+    @PostMapping("/v1/join")
+    public ResponseEntity<SingleResult<JoinResDto>> join(@Valid @RequestBody JoinReqDto joinReqDto) {
 
-        try {
-            memberService.join(joinReqDto);
+//        if (errors.hasErrors()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
 
-        } catch (Exception e) {
-            log.error("회원 가입 실패 : ", e);
+        // 비밀번호 암호화
+        joinReqDto.encodePassword(passwordEncoder, joinReqDto.getPassword());
 
-        }
+        SingleResult<JoinResDto> result = memberService.join(joinReqDto);
 
-        return ResponseEntity.ok("회원 가입이 완료되었습니다.");
+        //비밀번호 초기화 (보안상 목적)
+        joinReqDto.deletePassword();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

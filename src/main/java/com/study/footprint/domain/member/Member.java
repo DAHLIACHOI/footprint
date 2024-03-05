@@ -30,7 +30,7 @@ public class Member extends BaseEntity {
 
     @Column(nullable = false, length = 200)
     @Convert(converter = StringCryptoUniqueConverter.class)
-    private String nickname;
+    private String nickName;
 
     @Column(nullable = false, length = 100)
     private String password;
@@ -62,13 +62,13 @@ public class Member extends BaseEntity {
     }
 
     @Builder
-    public Member(Long id, String email, String nickname, String password, String profileImageUrl,
+    public Member(Long id, String email, String nickName, String password, String profileImageUrl,
                 Integer reportedCount, LocalDateTime bannedDate, Boolean certified, Boolean isDeleted,
                 List<Comment> comments, List<Posting> postings,
                 List<Like> likes) {
         this.id = id;
         this.email = email;
-        this.nickname = nickname;
+        this.nickName = nickName;
         this.password = password;
         this.profileImageUrl = profileImageUrl;
         this.reportedCount = reportedCount;
