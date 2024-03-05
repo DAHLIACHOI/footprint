@@ -17,15 +17,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .formLogin(AbstractHttpConfigurer::disable)// FormLogin 사용 X
-//                .httpBasic(AbstractHttpConfigurer::disable)// httpBasic 사용 X
-//                .csrf(AbstractHttpConfigurer::disable) // csrf 보안 사용 X                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-//                        .requestMatchers("/", "/join/**", "/login/**").permitAll()
-//                        .anyRequest().authenticated()
-//                );
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .headers(header -> header.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .authorizeHttpRequests(

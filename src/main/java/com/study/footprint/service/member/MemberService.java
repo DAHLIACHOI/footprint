@@ -5,8 +5,8 @@ import com.study.footprint.common.exception.CommonNotFoundException;
 import com.study.footprint.common.response.SingleResult;
 import com.study.footprint.domain.member.Member;
 import com.study.footprint.domain.member.MemberRepository;
-import com.study.footprint.dto.member.JoinReqDto;
-import com.study.footprint.dto.member.JoinResDto;
+import com.study.footprint.dto.member.request.JoinReqDto;
+import com.study.footprint.dto.member.response.JoinResDto;
 import com.study.footprint.service.common.ResponseService;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
@@ -32,12 +32,12 @@ public class MemberService {
         validExistMember(joinReqDto);
 
         // 사용가능한 닉네임인지 확인
-        validUsingNickName(joinReqDto);
+        validUsingnickname(joinReqDto);
 
         Member member = Member.builder()
                 .email(joinReqDto.getEmail())
                 .password(joinReqDto.getPassword())
-                .nickName(joinReqDto.getNickName())
+                .nickname(joinReqDto.getNickname())
                 .build();
 
         memberRepository.save(member);
@@ -56,9 +56,9 @@ public class MemberService {
         }
     }
 
-    private void validUsingNickName(JoinReqDto joinReqDto) {
-        if (memberRepository.existsByNickName(joinReqDto.getNickName())) {
-            throw new CommonConflictException("duplicationNickName");
+    private void validUsingnickname(JoinReqDto joinReqDto) {
+        if (memberRepository.existsByNickname(joinReqDto.getNickname())) {
+            throw new CommonConflictException("duplicationNickname");
         }
     }
 

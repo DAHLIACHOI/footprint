@@ -1,8 +1,8 @@
 package com.study.footprint.controller.member;
 
 import com.study.footprint.common.response.SingleResult;
-import com.study.footprint.dto.member.JoinReqDto;
-import com.study.footprint.dto.member.JoinResDto;
+import com.study.footprint.dto.member.request.JoinReqDto;
+import com.study.footprint.dto.member.response.JoinResDto;
 import com.study.footprint.service.member.MemberService;
 import jakarta.validation.Valid;
 import lombok.Builder;
