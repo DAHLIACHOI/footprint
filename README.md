@@ -12,6 +12,7 @@
 - 반환형식 정의 (CommonResult, SingleResult, ListResult)
 - [@ExceptionHandler를 통한 예외 처리](https://dahliachoi.tistory.com/106)
 - 메서드 분리 및 중복 코드 제거
+- [@AllArgsConstructor, @RequiredArgsConstructor 사용 지양](https://dahliachoi.tistory.com/107)
 
 
 ### API 명세서
