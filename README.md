@@ -10,7 +10,7 @@
 <b> 🌱 이전 프로젝트와 다른 것 (개발하면서 추가 예정) </b>
 - [글로벌 메시지 적용 (i18n 사용)](https://dahliachoi.tistory.com/105)
 - 반환형식 정의 (CommonResult, SingleResult, ListResult)
-- @ExceptionHandler를 통한 예외 처리
+- [@ExceptionHandler를 통한 예외 처리](https://dahliachoi.tistory.com/106)
 - 메서드 분리 및 중복 코드 제거
 
 
