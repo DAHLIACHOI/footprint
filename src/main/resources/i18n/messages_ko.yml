@@ -29,3 +29,31 @@ duplicationNickname:
 requiredNickname:
     code: "-4005"
     msg: "닉네임을 입력해 주세요."
+
+expiredToken:
+    code: "-4006"
+    msg: "토큰이 만료되었습니다."
+
+invalidToken:
+    code: "-4007"
+    msg: "유효하지 않은 토큰입니다."
+
+invalidPassword:
+    code: "-4008"
+    msg: "비밀번호가 일치하지 않습니다."
+
+authenticationInfoNotFound:
+    code: "-4009"
+    msg: "인증정보가 존재하지 않습니다."
+
+invalidRefreshToken:
+    code: "-4010"
+    msg: "유효하지 않은 리프레시 토큰입니다."
+
+logoutUser:
+    code: "-4011"
+    msg: "로그아웃된 사용자입니다."
+
+redisError:
+    code: "-5000"
+    msg: "Redis 서버에 접속할 수 없습니다."

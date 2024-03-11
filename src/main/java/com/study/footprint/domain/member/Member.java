@@ -37,6 +37,9 @@ public class Member extends BaseEntity {
 
     private String profileImageUrl;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private Integer reportedCount;
 
     private LocalDateTime bannedDate;
@@ -59,10 +62,11 @@ public class Member extends BaseEntity {
         this.reportedCount = this.reportedCount == null ? 0 : this.reportedCount;
         this.certified = this.certified == null ? false : this.certified;
         this.isDeleted = this.isDeleted == null ? false : this.isDeleted;
+        this.role = this.role == null ? Role.ROLE_USER : this.role;
     }
 
     @Builder
-    public Member(Long id, String email, String nickname, String password, String profileImageUrl,
+    public Member(Long id, String email, String nickname, String password, String profileImageUrl, Role role,
                 Integer reportedCount, LocalDateTime bannedDate, Boolean certified, Boolean isDeleted,
                 List<Comment> comments, List<Posting> postings,
                 List<Like> likes) {
@@ -71,6 +75,7 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
         this.password = password;
         this.profileImageUrl = profileImageUrl;
+        this.role = role;
         this.reportedCount = reportedCount;
         this.bannedDate = bannedDate;
         this.certified = certified;

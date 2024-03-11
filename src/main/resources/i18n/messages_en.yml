@@ -29,3 +29,27 @@ duplicationNickname:
 requiredNickname:
     code: "-4005"
     msg: "Please enter your nickname."
+
+expiredToken:
+    code: "-4006"
+    msg: "The token has expired."
+
+invalidToken:
+    code: "-4007"
+    msg: "Invalid token."
+
+authenticationInfoNotFound:
+    code: "-4008"
+    msg: "Authentication information does not exist."
+
+invalidRefreshToken:
+    code: "-4009"
+    msg: "Invalid refresh token."
+
+logoutUser:
+    code: "-4010"
+    msg: "User has been logged out."
+
+redisError:
+    code: "-5000"
+    msg: "Cannot connect to the Redis server."
