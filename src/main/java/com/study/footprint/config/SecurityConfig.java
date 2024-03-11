@@ -61,7 +61,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig 클래스를 적용
-                .apply(new JwtSecurityConfig(jwtTokenProvider));
+                .with(new JwtSecurityConfig(jwtTokenProvider), customizer -> {});
     return http.build();
     }
 }
