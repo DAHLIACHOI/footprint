@@ -1,10 +1,12 @@
 package com.study.footprint.config.auth.filter;
 
+import com.study.footprint.common.exception.CommonServerException;
 import com.study.footprint.config.auth.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -28,14 +30,20 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
 
-        // 1. Request Header 에서 토큰을 꺼냄
+        //Request Header 에서 토큰을 꺼냄
         String jwt = resolveToken(request);
 
-        // 2. validateToken 으로 토큰 유효성 검사
-        // 정상 토큰이면 해당 토큰으로 Authentication 을 가져와서 SecurityContext 에 저장
-        if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
-            Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            if (StringUtils.hasText(jwt) && jwtTokenProvider.validateToken(jwt)) {
+                Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+        } catch (RedisConnectionFailureException e) {
+            SecurityContextHolder.clearContext();
+            throw new CommonServerException("redisError");
+        } catch (Exception e) {
+            SecurityContextHolder.clearContext();
+            throw new CommonServerException("invalidToken");
         }
 
         filterChain.doFilter(request, response);

@@ -6,6 +6,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +19,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -35,14 +37,17 @@ public class JwtTokenProvider {
     private long refreshExpirationTime;
 
     private final Key key;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, RedisTemplate<String, String> redisTemplate) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.redisTemplate = redisTemplate;
     }
 
-    public TokenDto generateTokenDto(Authentication authentication) {
-
+    // Access Token 생성
+    public String createAccessToken(Authentication authentication) {
         // 권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -52,24 +57,32 @@ public class JwtTokenProvider {
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + accessExpirationTime);
-        String accessToken = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(authentication.getName())       // payload "sub": "name"
                 .claim(AUTHORITIES_KEY, authorities)        // payload "auth": "ROLE_USER"
                 .setExpiration(accessTokenExpiresIn)        // payload "exp": 151621022 (ex)
                 .signWith(key, SignatureAlgorithm.HS512)    // header "alg": "HS512"
                 .compact();
+    }
 
-        // Refresh Token 생성
+    // Refresh Token 생성
+    public String createRefreshToken(Authentication authentication) {
+
+        long now = (new Date()).getTime();
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + refreshExpirationTime))
+                .setExpiration(new Date((new Date()).getTime() + refreshExpirationTime))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        return TokenDto.builder()
-                .grantType(BEARER_TYPE)
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+        //redis 저장
+        redisTemplate.opsForValue().set(
+                authentication.getName(),
+                refreshToken,
+                refreshExpirationTime,
+                TimeUnit.MICROSECONDS
+        );
+
+        return refreshToken;
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -96,16 +109,15 @@ public class JwtTokenProvider {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.info("잘못된 JWT 서명입니다.");
+
         } catch (ExpiredJwtException e) {
             log.info("만료된 JWT 토큰입니다.");
-        } catch (UnsupportedJwtException e) {
-            log.info("지원되지 않는 JWT 토큰입니다.");
-        } catch (IllegalArgumentException e) {
-            log.info("JWT 토큰이 잘못되었습니다.");
+            throw new CommonBadRequestException("expiredToken");
+
+        } catch (Exception e) {
+            log.info("유효하지 않은 JWT 토큰입니다.");
+            throw new CommonBadRequestException("invalidToken");
         }
-        return false;
     }
 
     private Claims parseClaims(String accessToken) {
