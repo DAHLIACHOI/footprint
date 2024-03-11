@@ -27,8 +27,12 @@ public class JwtTokenProvider {
 
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
+
+    @Value("${spring.jwt.acccess-token-expire-time}")
+    private long accessExpirationTime;
+
+    @Value("${spring.jwt.refresh-token-expire-time}")
+    private long refreshExpirationTime;
 
     private final Key key;
 
@@ -38,6 +42,7 @@ public class JwtTokenProvider {
     }
 
     public TokenDto generateTokenDto(Authentication authentication) {
+
         // 권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -46,7 +51,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        Date accessTokenExpiresIn = new Date(now + accessExpirationTime);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())       // payload "sub": "name"
                 .claim(AUTHORITIES_KEY, authorities)        // payload "auth": "ROLE_USER"
@@ -56,7 +61,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                .setExpiration(new Date(now + refreshExpirationTime))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
