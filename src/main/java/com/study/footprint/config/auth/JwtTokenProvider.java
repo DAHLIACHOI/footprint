@@ -28,15 +28,15 @@ public class JwtTokenProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer";
 
-    @Value("${spring.jwt.acccess-token-expire-time}")
+    @Value("${jwt.access-token-expire-time}")
     private long accessExpirationTime;
 
-    @Value("${spring.jwt.refresh-token-expire-time}")
+    @Value("${jwt.refresh-token-expire-time}")
     private long refreshExpirationTime;
 
     private final Key key;
 
-    public JwtTokenProvider(@Value("${spring.jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
