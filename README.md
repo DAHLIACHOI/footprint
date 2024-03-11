@@ -1,5 +1,8 @@
 ### 🐾 당신의 발자취 리펙토링 
 [이전 프로젝트 repository](https://github.com/DAHLIACHOI/Foot-Step_Server/tree/main)
+- SpringBoot 3.2.1
+- Java 17
+- Gradle
 
 ### ⚙️ 개선해야겠다고 느낀 점
 > 첫 스프링 프로젝트였어서 코드가 깔끔하지 않고 가독성이 낮았던 것 같았다. <br>
@@ -7,16 +10,19 @@
 
 <br>
 
-<b> 🌱 이전 프로젝트와 다른 것 (개발하면서 추가 예정) </b>
+<b> 🌱 이전 프로젝트와 다른 것 & 프로젝트 관련 개발 블로그 (개발하면서 추가 예정) </b>
 - [글로벌 메시지 적용 (i18n 사용)](https://dahliachoi.tistory.com/105)
 - 반환형식 정의 (CommonResult, SingleResult, ListResult)
 - [@ExceptionHandler를 통한 예외 처리](https://dahliachoi.tistory.com/106)
 - 메서드 분리 및 중복 코드 제거
 - [@AllArgsConstructor, @RequiredArgsConstructor 사용 지양](https://dahliachoi.tistory.com/107)
+- [JWT accessToken/RefreshToken 구현 (with. Redis)](https://dahliachoi.tistory.com/108)
 
+<br>
 
 ### API 명세서
 | 기능 | Method | URI |
 | :---: | :---: | :---: |
 | 회원가입 | POST | /v1/join |
-|  |  |  |
+| 로그인 | POST | /v1/login |
+| 토큰재발급 | POST | /v1/reissue |
