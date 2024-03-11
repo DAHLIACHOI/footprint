@@ -1,4 +1,4 @@
-package com.study.footprint.dto.member;
+package com.study.footprint.dto.member.response;
 
 import lombok.AccessLevel;
 import lombok.Builder;
