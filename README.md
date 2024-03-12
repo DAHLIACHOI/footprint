@@ -17,6 +17,7 @@
 - 메서드 분리 및 중복 코드 제거
 - [@AllArgsConstructor, @RequiredArgsConstructor 사용 지양](https://dahliachoi.tistory.com/107)
 - [JWT accessToken/RefreshToken 구현 (with. Redis)](https://dahliachoi.tistory.com/108)
+- [게시글 등록하면서 리팩토링한 부분](https://github.com/DAHLIACHOI/TIL/blob/main/%EA%B0%9C%EB%B0%9C/%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/'%EB%8B%B9%EC%8B%A0%EC%9D%98%20%EB%B0%9C%EC%9E%90%EC%B7%A8'%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%97%85%EB%A1%9C%EB%93%9C%20%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81.md)
 
 <br>
 
