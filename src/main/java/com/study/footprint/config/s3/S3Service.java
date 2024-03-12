@@ -3,6 +3,7 @@ package com.study.footprint.config.s3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.study.footprint.common.exception.CommonBadRequestException;
 import com.study.footprint.common.util.validation.ValidationUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,9 +37,9 @@ public class S3Service {
                     .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
             return upload(uploadFile, multipartFile.getOriginalFilename());
+        } else {
+            throw new CommonBadRequestException("requiredFile");
         }
-
-        return "";
     }
 
     private String upload(File uploadFile, String originalName) {
