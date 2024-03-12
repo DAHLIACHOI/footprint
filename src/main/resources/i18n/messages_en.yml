@@ -38,17 +38,57 @@ invalidToken:
     code: "-4007"
     msg: "Invalid token."
 
+invalidPassword:
+  code: "-4008"
+  msg: "The password does not match."
+
 authenticationInfoNotFound:
-    code: "-4008"
+    code: "-4009"
     msg: "Authentication information does not exist."
 
 invalidRefreshToken:
-    code: "-4009"
+    code: "-4010"
     msg: "Invalid refresh token."
 
 logoutUser:
-    code: "-4010"
+    code: "-4011"
     msg: "User has been logged out."
+
+requiredTitle:
+    code: "-4012"
+    msg: "Please enter the title."
+
+requiredContent:
+    code: "-4013"
+    msg: "Please enter the content."
+
+pastOrPresentDate:
+    code: "-4014"
+    msg: "Please enter a past or present date."
+
+requiredPlaceName:
+    code: "-4015"
+    msg: "Please enter the place name."
+
+requiredPlaceAddress:
+    code: "-4016"
+    msg: "Please enter the place address."
+
+notLatitudeFormat:
+    code: "-4017"
+    msg: "Please enter -90 ~ 90"
+
+notLongitudeFormat:
+    code: "-4018"
+    msg: "please enter -180 ~ 180"
+
+cityNotFound:
+    code: "-4019"
+    msg: "City information does not exist."
+
+requiredFile:
+    code: "-4020"
+    msg: "Please upload a file."
 
 redisError:
     code: "-5000"
