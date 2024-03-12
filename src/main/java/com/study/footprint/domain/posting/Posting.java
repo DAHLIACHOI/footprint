@@ -11,8 +11,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -24,11 +24,13 @@ public class Posting extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     private String content;
 
     private String imageUrl;
 
-    private LocalDateTime recordDate;
+    private Date recordDate;
 
     private Boolean isPublic; // 공개여부
 
@@ -55,8 +57,9 @@ public class Posting extends BaseEntity {
     }
 
     @Builder
-    public Posting(Long id, String content, String imageUrl, LocalDateTime recordDate, Boolean isPublic, Boolean isPosting, Place place, Member member) {
+    public Posting(Long id, String title, String content, String imageUrl, Date recordDate, Boolean isPublic, Boolean isPosting, Place place, Member member) {
         this.id = id;
+        this.title = title;
         this.content = content;
         this.imageUrl = imageUrl;
         this.recordDate = recordDate;

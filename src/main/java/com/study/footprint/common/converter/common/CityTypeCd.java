@@ -1,6 +1,7 @@
 package com.study.footprint.common.converter.common;
 
 import com.study.footprint.common.EnumMapperFieldType;
+import com.study.footprint.common.exception.CommonNotFoundException;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -38,7 +39,7 @@ public enum CityTypeCd implements EnumMapperFieldType {
         return Arrays.stream(CityTypeCd.values())
                 .filter(c -> c.getCode() == code)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("없는 도시"));
+                .orElseThrow(() -> new CommonNotFoundException("cityNotFound"));
     }
 
 }

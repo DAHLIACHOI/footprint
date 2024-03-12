@@ -31,10 +31,6 @@ public class MemberController {
     @PostMapping("/v1/join")
     public ResponseEntity<SingleResult<JoinResDto>> join(@Valid @RequestBody JoinReqDto joinReqDto) {
 
-//        if (errors.hasErrors()) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-
         // 비밀번호 암호화
         joinReqDto.encodePassword(passwordEncoder, joinReqDto.getPassword());
 
