@@ -21,7 +21,7 @@
 
 <br>
 
-### API 명세서
+### 📄 API 명세서
 | 기능 | Method | URI |
 | :---: | :---: | :---: |
 | 회원가입 | POST | /v1/join |
@@ -30,7 +30,7 @@
 | 게시글 등록 | POST | /v1/posting |
 
 
-### Git Convention
+### 🫧 Git Convention
 | keyword | description |
 | :---:| :---:|
 | feat | 새로운 기능 추가 |
