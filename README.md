@@ -27,6 +27,7 @@
 | 회원가입 | POST | /v1/join |
 | 로그인 | POST | /v1/login |
 | 토큰재발급 | POST | /v1/reissue |
+| 게시글 등록 | POST | /v1/posting |
 
 
 ### Git Convention
