@@ -90,6 +90,10 @@ requiredFile:
     code: "-4020"
     msg: "파일을 입력해 주세요."
 
+postingNotFound:
+    code: "-4021"
+    msg: "일치하는 게시글이 없습니다."
+
 redisError:
     code: "-5000"
     msg: "Redis 서버에 접속할 수 없습니다."

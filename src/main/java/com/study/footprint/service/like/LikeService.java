@@ -9,6 +9,7 @@ import com.study.footprint.domain.member.MemberRepository;
 import com.study.footprint.domain.posting.Posting;
 import com.study.footprint.domain.posting.PostingRepository;
 import com.study.footprint.dto.like.response.ClickLikeResDto;
+import com.study.footprint.dto.like.response.CountLikeResDto;
 import com.study.footprint.service.common.ResponseService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,5 +68,16 @@ public class LikeService {
     private Posting findPostingById(Long postingId) {
         return postingRepository.findById(postingId)
                 .orElseThrow(() -> new CommonNotFoundException("postingNotFound"));
+    }
+
+    public SingleResult<CountLikeResDto> countLike(Long postingId) {
+
+        Posting posting = findPostingById(postingId);
+
+        Long likeCount = likeRepository.countByPosting(posting);
+
+        CountLikeResDto countLikeResDto = CountLikeResDto.builder().likeCount(likeCount).build();
+
+        return responseService.getSingleResult(countLikeResDto);
     }
 }
