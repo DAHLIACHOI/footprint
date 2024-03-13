@@ -28,6 +28,7 @@
 | 로그인 | POST | /v1/login |
 | 토큰재발급 | POST | /v1/reissue |
 | 게시글 등록 | POST | /v1/posting |
+| 좋아요 등록 및 삭제 (v1) | POST | /v1/like/{posting-id} |
 
 
 ### 🫧 Git Convention
