@@ -28,7 +28,7 @@ public class LikeController {
     }
 
     /**
-     * 좋아요가 안 눌려있으면 취소, 눌려있다면 등록
+     * v1 ) 좋아요가 안 눌려있으면 취소, 눌려있다면 등록
      * @param postingId
      * @return SingleResult<ClickLikeResDto> isLike(좋아요 상태) (true, false)
      */
@@ -49,4 +49,21 @@ public class LikeController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    /**
+     * v2 ) 좋아요가 안 눌려있으면 등록, 눌려있다면 취소
+     * @param postingId
+     * @return SingleResult<ClickLikeResDto> isLike(좋아요 상태) (true, false)
+     */
+    @PostMapping("/v2/like/{posting-id}")
+    public ResponseEntity<SingleResult<ClickLikeResDto>> clickLikeV2(@PathVariable("posting-id") Long postingId) {
+
+        Long userId = configUtil.getLoginUserId();
+
+        SingleResult<ClickLikeResDto> result = likeService.clickLikeV2(postingId, userId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 }

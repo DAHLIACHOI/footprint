@@ -80,4 +80,10 @@ public class LikeService {
 
         return responseService.getSingleResult(countLikeResDto);
     }
+
+
+    @Transactional
+    public SingleResult<ClickLikeResDto> clickLikeV2(Long postingId, Long userId) {
+        return null;
+    }
 }
