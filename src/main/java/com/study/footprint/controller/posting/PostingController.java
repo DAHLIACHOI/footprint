@@ -34,8 +34,37 @@ public class PostingController {
         this.s3Service = s3Service;
     }
 
+
+    /**
+     * v1) 게시물 업로드 (한 트랜잭션 안에서 이미지 업로드)
+     * @param file
+     * @param uploadPostingReqDto
+     * @return SingleResult<UploadPostingResDto> postingId(게시물 id)
+     * @throws IOException
+     */
     @PostMapping("/v1/posting")
     public ResponseEntity<SingleResult<UploadPostingResDto>> uploadPosting(@NotNull(message = "requiredFile") @RequestPart MultipartFile file,
+                                                                          @Valid @RequestPart UploadPostingReqDto uploadPostingReqDto) throws IOException {
+
+        // 현재 로그인한 유저 정보 가져오기
+        Long userId = configUtil.getLoginUserId();
+
+        SingleResult<UploadPostingResDto> result = postingService.uploadPostingV1(uploadPostingReqDto, file, userId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
+
+    /**
+     * v2) 게시물 업로드 (해당 서비스 트랜잭션에서는 이미지 업로드 안함)
+     * @param file
+     * @param uploadPostingReqDto
+     * @return SingleResult<UploadPostingResDto> postingId(게시물 id)
+     * @throws IOException
+     */
+    @PostMapping("/v2/posting")
+    public ResponseEntity<SingleResult<UploadPostingResDto>> uploadPostingV2(@NotNull(message = "requiredFile") @RequestPart MultipartFile file,
                                                                            @Valid @RequestPart UploadPostingReqDto uploadPostingReqDto) throws IOException {
 
         // 현재 로그인한 유저 정보 가져오기
@@ -44,7 +73,7 @@ public class PostingController {
         // 파일 업로드 후 url 반환 -> 파일 업로드와 포스팅 업로드 트랜잭션 분리
         String imageUrl = s3Service.upload(file);
 
-        SingleResult<UploadPostingResDto> result = postingService.uploadPosting(uploadPostingReqDto, imageUrl, userId);
+        SingleResult<UploadPostingResDto> result = postingService.uploadPostingV2(uploadPostingReqDto, imageUrl, userId);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
