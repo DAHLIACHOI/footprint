@@ -1,6 +1,9 @@
 package com.study.footprint.controller.common.exception;
 
+import com.study.footprint.common.exception.CommonBadRequestException;
 import com.study.footprint.common.exception.CommonConflictException;
+import com.study.footprint.common.exception.CommonNotFoundException;
+import com.study.footprint.common.exception.CommonServerException;
 import com.study.footprint.common.response.CommonResult;
 import com.study.footprint.service.common.ResponseService;
 import org.springframework.http.HttpStatus;
@@ -25,7 +28,7 @@ public class ExceptionAdviceController {
     /**
      * CommonConflictException 처리
      * @param e
-     * @return
+     * @return commonResult
      */
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(CommonConflictException.class)
@@ -36,7 +39,7 @@ public class ExceptionAdviceController {
     /**
      * MethodArgumentNotValidException 처리 (DTO validation)
      * @param e
-     * @return
+     * @return List<CommonResult>
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -49,5 +52,39 @@ public class ExceptionAdviceController {
         });
 
         return errors;
+    }
+
+    /**
+     * CommonNotFoundException 처리
+     * @param e
+     * @return commonResult
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CommonNotFoundException.class)
+    public CommonResult notFoundException(CommonNotFoundException e) {
+        return responseService.getFailResult(e.getMessage());
+    }
+
+
+    /**
+     * CommonServerException 처리
+     * @param e
+     * @return commonResult
+     */
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(CommonServerException.class)
+    public CommonResult serverException(CommonServerException e) {
+        return responseService.getFailResult(e.getMessage());
+    }
+
+    /**
+     * CommonBadRequestException 처리
+     * @param e
+     * @return commonResult
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CommonBadRequestException.class)
+    public CommonResult badRequestException(CommonBadRequestException e) {
+        return responseService.getFailResult(e.getMessage());
     }
 }

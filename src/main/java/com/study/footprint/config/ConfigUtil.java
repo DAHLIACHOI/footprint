@@ -19,7 +19,6 @@ public class ConfigUtil {
      */
     public Long getLoginUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getName());
         return Long.parseLong(auth.getName());
     }
 }
