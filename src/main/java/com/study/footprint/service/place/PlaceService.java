@@ -27,7 +27,7 @@ public class PlaceService {
     public Place getPlace(UploadPlaceReqDto uploadPlaceReqDto) {
 
         return placeRepository.findByLatitudeAndLongitude(uploadPlaceReqDto.latitude(), uploadPlaceReqDto.longitude())
-                .orElse(createPlace(uploadPlaceReqDto));
+                .orElseGet(() -> createPlace(uploadPlaceReqDto));
     }
 
 
