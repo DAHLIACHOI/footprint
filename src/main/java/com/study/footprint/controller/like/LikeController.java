@@ -71,5 +71,19 @@ public class LikeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 테스트를 위한 api (좋아요 수 누적시키기 위함)
+     */
+    @PostMapping("/test/like/{posting-id}")
+    public ResponseEntity<HttpStatus> testClickLike(@PathVariable("posting-id") Long postingId) {
+
+        Long userId = configUtil.getLoginUserId();
+
+        likeService.testClickLike(postingId, userId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 
 }

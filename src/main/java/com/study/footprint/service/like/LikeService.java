@@ -100,4 +100,13 @@ public class LikeService {
 
         return likeRepository.countByPosting(posting);
     }
+
+    @Transactional
+    public void testClickLike(Long postingId, Long userId) {
+
+        likeRepository.save(Like.builder()
+                .member(findMemberById(userId))
+                .posting(findPostingById(postingId))
+                .build());
+    }
 }
