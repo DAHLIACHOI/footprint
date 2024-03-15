@@ -97,7 +97,7 @@ public class MemberService {
 
     /**
      * 테스트 v2) 멤버 조회 (조회할 때 포스팅 개수도 같이 가져오기)
-     * fetch join 사용
+     * fetch join 사용 (N+1 문제 해결)
      * @return
      */
     public ListResult<TestGetMembersResDto> testGetMembersV2() {
