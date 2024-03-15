@@ -70,6 +70,7 @@ public class LikeService {
                 .orElseThrow(() -> new CommonNotFoundException("postingNotFound"));
     }
 
+
     public SingleResult<CountLikeResDto> countLike(Long postingId) {
 
         Posting posting = findPostingById(postingId);
@@ -85,5 +86,27 @@ public class LikeService {
     @Transactional
     public SingleResult<ClickLikeResDto> clickLikeV2(Long postingId, Long userId) {
         return null;
+    }
+
+
+
+    public Boolean getIsLike(Posting posting, Member member) {
+
+        return likeRepository.existsByPostingAndMember(posting, member);
+    }
+
+
+    public Long getLikeCount(Posting posting) {
+
+        return likeRepository.countByPosting(posting);
+    }
+
+    @Transactional
+    public void testClickLike(Long postingId, Long userId) {
+
+        likeRepository.save(Like.builder()
+                .member(findMemberById(userId))
+                .posting(findPostingById(postingId))
+                .build());
     }
 }

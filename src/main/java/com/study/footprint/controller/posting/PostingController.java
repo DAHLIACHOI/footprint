@@ -4,6 +4,7 @@ import com.study.footprint.common.response.SingleResult;
 import com.study.footprint.config.ConfigUtil;
 import com.study.footprint.config.s3.S3Service;
 import com.study.footprint.dto.posting.request.UploadPostingReqDto;
+import com.study.footprint.dto.posting.response.GetPostingResDto;
 import com.study.footprint.dto.posting.response.UploadPostingResDto;
 import com.study.footprint.service.posting.PostingService;
 import jakarta.validation.Valid;
@@ -12,9 +13,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -73,10 +72,23 @@ public class PostingController {
         // 파일 업로드 후 url 반환 -> 파일 업로드와 포스팅 업로드 트랜잭션 분리
         String imageUrl = s3Service.upload(file);
 
-        SingleResult<UploadPostingResDto> result = postingService.uploadPostingV2(uploadPostingReqDto, imageUrl, userId);
+        SingleResult<UploadPostingResDto> result = postingService.uploadPostingV2(uploadPostingReqDto, imageUrl);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
+    }
+
+    /**
+     * v1) 게시물 상세 조회
+     * @param postingId
+     * @return
+     */
+    @GetMapping("/v1/posting/{posting-id}")
+    public ResponseEntity<SingleResult<GetPostingResDto>> getPostingV1(@PathVariable("posting-id") Long postingId) {
+
+        SingleResult<GetPostingResDto> result = postingService.getPostingV1(postingId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

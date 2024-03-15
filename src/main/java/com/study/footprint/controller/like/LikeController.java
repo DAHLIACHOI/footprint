@@ -42,6 +42,12 @@ public class LikeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * v1 ) 게시물의 좋아요 개수 (개수 테스트용 api)
+     * @param postingId
+     * @return
+     */
+
     @GetMapping("/v1/like/{posting-id}")
     public ResponseEntity<SingleResult<CountLikeResDto>> countLike(@PathVariable("posting-id") Long postingId) {
 
@@ -64,6 +70,20 @@ public class LikeController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    /**
+     * 테스트를 위한 api (좋아요 수 누적시키기 위함)
+     */
+    @PostMapping("/test/like/{posting-id}")
+    public ResponseEntity<HttpStatus> testClickLike(@PathVariable("posting-id") Long postingId) {
+
+        Long userId = configUtil.getLoginUserId();
+
+        likeService.testClickLike(postingId, userId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
 }
