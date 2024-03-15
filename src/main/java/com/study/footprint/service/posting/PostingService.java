@@ -53,6 +53,7 @@ public class PostingService {
 
     /**
      * v1) 게시물 업로드 (한 트랜잭션 안에서 이미지 업로드)
+     *
      * @param uploadPostingReqDto
      * @param file
      * @param userId
@@ -91,6 +92,7 @@ public class PostingService {
 
     /**
      * v2) 게시물 업로드 (해당 트랜잭션에서는 이미지 업로드 안함)
+     *
      * @param uploadPostingReqDto
      * @param imageUrl
      * @return
@@ -141,22 +143,22 @@ public class PostingService {
         Posting posting = findPostingById(postingId);
         Member member = findLoginMember();
 
-
         List<GetCommentResDtoVo> commentList = commentRepository.findByPosting(posting);
 
-            GetPostingResDto getPostingResDto = GetPostingResDto.builder()
-                    .postingDate(posting.getRecordDate())
-                    .title(posting.getTitle())
-                    .content(posting.getContent())
-                    .imageUrl(posting.getImageUrl())
-                    .placeName(posting.getPlace().getName())
-                    .likes(likeService.getLikeCount(posting))
-                    .nickName(posting.getMember().getNickname())
-                    .commentList(commentList)
-                    .commentNum((long) commentList.size())
-                    .isLike(likeService.getIsLike(posting, member))
-                    .build();
+        GetPostingResDto getPostingResDto = GetPostingResDto.builder()
+                .postingId(posting.getId())
+                .recordDate(posting.getRecordDate())
+                .title(posting.getTitle())
+                .content(posting.getContent())
+                .imageUrl(posting.getImageUrl())
+                .placeName(posting.getPlace().getName())
+                .likes(likeService.getLikeCount(posting))
+                .nickName(posting.getMember().getNickname())
+                .commentList(commentList)
+                .commentNum((long) commentList.size())
+                .isLike(likeService.getIsLike(posting, member))
+                .build();
 
-            return responseService.getSingleResult(getPostingResDto);
+        return responseService.getSingleResult(getPostingResDto);
     }
 }

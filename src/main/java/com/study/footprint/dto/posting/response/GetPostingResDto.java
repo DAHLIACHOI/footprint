@@ -8,7 +8,9 @@ import java.util.List;
 
 @Builder
 public record GetPostingResDto(
-        Date postingDate,
+
+        Long postingId,
+        Date recordDate,
         String title,
         String content,
         String imageUrl,
