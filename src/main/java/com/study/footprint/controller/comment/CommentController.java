@@ -4,6 +4,7 @@ import com.study.footprint.common.response.SingleResult;
 import com.study.footprint.dto.comment.request.UploadCommentReqDto;
 import com.study.footprint.dto.comment.response.UploadCommentResDto;
 import com.study.footprint.service.comment.CommentService;
+import jakarta.validation.Valid;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class CommentController {
 
     @PostMapping("/v1/comment/{posting-id}")
     public ResponseEntity<SingleResult<UploadCommentResDto>> uploadComment(@PathVariable("posting-id") Long postingId,
-                                                                           @RequestBody UploadCommentReqDto uploadCommentReqDto) {
+                                                                           @Valid @RequestBody UploadCommentReqDto uploadCommentReqDto) {
 
         SingleResult<UploadCommentResDto> result = commentService.uploadCommentV1(postingId, uploadCommentReqDto);
 

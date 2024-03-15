@@ -1,6 +1,6 @@
 package com.study.footprint.dto.member.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class JoinReqDto {
     @Pattern(regexp = "^([a-zA-Z0-9]{8,16})$", message = "notPasswordFormat")
     private String password;
 
-    @NotNull(message = "requiredNickname")
+    @NotBlank(message = "requiredNickname")
     private String nickname;
 
     @Builder
