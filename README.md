@@ -27,12 +27,14 @@
 ### 📄 API 명세서
 | 기능 | Method | URI |
 | :---: | :---: | :---: |
-| 회원가입 | POST | /v1/join |
-| 로그인 | POST | /v1/login |
-| 토큰재발급 | POST | /v1/reissue |
-| 게시글 등록 | POST | /v1/posting |
-| 좋아요 등록 및 삭제 (v1) | POST | /v1/like/{posting-id} |
+| 회원가입 | POST | /{version}/join |
+| 로그인 | POST | /{version}/login |
+| 토큰재발급 | POST | /{version}/reissue |
+| 게시글 등록 | POST | /{version}/posting |
+| 좋아요 등록 및 삭제 | POST | /{version}/like/{posting-id} |
+| 댓글 등록 | POST | /{version}/comment/{posting-id} |
 
+> {version} : v1, v2...
 
 ### 🫧 Git Convention
 | keyword | description |
