@@ -1,5 +1,5 @@
 ### 🐾 당신의 발자취 리펙토링 
-[이전 프로젝트 repository](https://github.com/DAHLIACHOI/Foot-Step_Server/tree/main)
+[이전 프로젝트 repository](https://github.com/UMC-Foot-Step/Server)
 - SpringBoot 3.2.1
 - Java 17
 - Gradle
