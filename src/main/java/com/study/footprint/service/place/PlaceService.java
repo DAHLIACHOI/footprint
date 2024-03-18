@@ -14,6 +14,8 @@ import com.study.footprint.domain.posting.PostingRepository;
 import com.study.footprint.dto.place.request.UploadPlaceReqDto;
 import com.study.footprint.dto.place.response.GetAllPlaceResDto;
 import com.study.footprint.service.common.ResponseService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Transactional(readOnly = true)
 @Service
 public class PlaceService {
@@ -53,8 +56,8 @@ public class PlaceService {
                 .orElseGet(() -> createPlace(uploadPlaceReqDto));
     }
 
-
-    private Place createPlace(UploadPlaceReqDto uploadPlaceReqDto) {
+    @Transactional
+    public Place createPlace(UploadPlaceReqDto uploadPlaceReqDto) {
 
         Place place = Place.builder()
                 .name(uploadPlaceReqDto.name())
@@ -84,12 +87,12 @@ public class PlaceService {
         // 멤버의 게시글 조회 (여기서 위치 정보까지 fetch join으로 가져오기)
         List<Posting> postings = postingRepository.findAllByMemberFetch(member);
 
+        // 중복 제거를 위해 Set으로 변환
         Set<GetAllPlaceResDto> getAllPlaceResDtoList = new HashSet<>();
 
         for (Posting posting : postings) {
             getAllPlaceResDtoList.add(GetAllPlaceResDto.builder()
                     .placeId(posting.getPlace().getId())
-                    .placeName(posting.getPlace().getName())
                     .latitude(posting.getPlace().getLatitude())
                     .longitude(posting.getPlace().getLongitude())
                     .build());
@@ -97,5 +100,37 @@ public class PlaceService {
 
         return responseService.getListResult(new ArrayList<>(getAllPlaceResDtoList));
     }
+
+    /**
+     * v2) 모든 발자취 조회
+     * 캐시 적용
+     * @param memberId
+     * @return
+     */
+    @Cacheable(cacheNames = "all_place", key = "#memberId")
+    public ListResult<GetAllPlaceResDto> getAllPlacesV2(Long memberId) {
+
+        // 현재 로그인 한 멤버 정보 조회
+        Member member = findMemberById(memberId);
+
+        // 멤버의 게시글 조회 (여기서 위치 정보까지 fetch join으로 가져오기)
+        List<Posting> postings = postingRepository.findAllByMemberFetch(member);
+
+        // 중복 제거를 위해 Set으로 변환
+        Set<GetAllPlaceResDto> getAllPlaceResDtoList = new HashSet<>();
+
+        for (Posting posting : postings) {
+            getAllPlaceResDtoList.add(GetAllPlaceResDto.builder()
+                    .placeId(posting.getPlace().getId())
+                    .latitude(posting.getPlace().getLatitude())
+                    .longitude(posting.getPlace().getLongitude())
+                    .build());
+        }
+
+        return responseService.getListResult(new ArrayList<>(getAllPlaceResDtoList));
+
+    }
+
+
 
 }

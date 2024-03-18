@@ -17,6 +17,7 @@ import com.study.footprint.dto.posting.response.UploadPostingResDto;
 import com.study.footprint.service.common.ResponseService;
 import com.study.footprint.service.like.LikeService;
 import com.study.footprint.service.place.PlaceService;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -123,6 +124,42 @@ public class PostingService {
         return responseService.getSingleResult(uploadPostingResDto);
 
     }
+
+    /**
+     * v3) 게시물 업로드
+     * 유저가 글을 올리게 될 경우 기존에 저장해놓았던 spring cache를 삭제한다.
+     * @param uploadPostingReqDto
+     * @param imageUrl
+     * @return
+     */
+    @Transactional
+    @CacheEvict(cacheNames = "all_place", key = "#memberId")
+    public SingleResult<UploadPostingResDto> uploadPostingV3(UploadPostingReqDto uploadPostingReqDto, String imageUrl, Long memberId) {
+
+        Member member = findLoginMember();
+
+        Place place = placeService.getPlace(uploadPostingReqDto.uploadPlaceReqDto());
+
+        // 게시물 저장
+        Posting posting = Posting.builder()
+                .title(uploadPostingReqDto.title())
+                .content(uploadPostingReqDto.content())
+                .recordDate(uploadPostingReqDto.recordDate())
+                .imageUrl(imageUrl)
+                .place(place)
+                .isPublic(uploadPostingReqDto.isPublic())
+                .member(member)
+                .build();
+
+        postingRepository.save(posting);
+
+        // 반환값
+        UploadPostingResDto uploadPostingResDto = UploadPostingResDto.builder().postingId(posting.getId()).build();
+
+        return responseService.getSingleResult(uploadPostingResDto);
+
+    }
+
 
 
     private Member findLoginMember() {

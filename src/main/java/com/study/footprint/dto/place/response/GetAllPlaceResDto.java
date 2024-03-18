@@ -7,7 +7,6 @@ import java.util.Objects;
 @Builder
 public record GetAllPlaceResDto (
         Long placeId,
-        String placeName,
         Double latitude,
         Double longitude
 ){
