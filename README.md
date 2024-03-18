@@ -28,18 +28,23 @@
 ### ⚒️ 기술 스택
 <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 <img src="https://img.shields.io/badge/mariadb-003545?style=for-the-badge&logo=mariadb&logoColor=white"> <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"> 
+<br>
 
 ### 📄 API 명세서
 | 기능 | Method | URI |
 | :---: | :---: | :---: |
-| 회원가입 | POST | /{version}/join |
-| 로그인 | POST | /{version}/login |
-| 토큰재발급 | POST | /{version}/reissue |
-| 게시글 등록 | POST | /{version}/posting |
-| 좋아요 등록 및 삭제 | POST | /{version}/like/{posting-id} |
-| 댓글 등록 | POST | /{version}/comment/{posting-id} |
+| 회원가입 | POST | /v1/join |
+| 로그인 | POST | /v1/login |
+| 토큰재발급 | POST | /v1/reissue |
+| 게시글 등록 | POST | /v1/posting |
+| 게시글 등록 | POST | /v2/posting |
+| 게시글 등록 | POST | /v3/posting |
+| 좋아요 등록 및 삭제 | POST | /v1/like/{posting-id} |
+| 댓글 등록 | POST | /v1/comment/{posting-id} |
+| 모든 발자취(위치) 조회 | GET | /v1/places |
+| 모든 발자취(위치) 조회 | GET | /v2/places |
 
-> {version} : v1, v2...
+<br>
 
 ### 🫧 Git Convention
 | keyword | description |
