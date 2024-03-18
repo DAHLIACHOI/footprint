@@ -78,6 +78,19 @@ public class PostingController {
 
     }
 
+    @PostMapping("/v3/posting")
+    public ResponseEntity<SingleResult<UploadPostingResDto>> uploadPostingV3(@NotNull(message = "requiredFile") @RequestPart MultipartFile file,
+                                                                           @Valid @RequestPart UploadPostingReqDto uploadPostingReqDto) throws IOException {
+
+        // 파일 업로드 후 url 반환 -> 파일 업로드와 포스팅 업로드 트랜잭션 분리
+        String imageUrl = s3Service.upload(file);
+
+        SingleResult<UploadPostingResDto> result = postingService.uploadPostingV3(uploadPostingReqDto, imageUrl, configUtil.getLoginUserId());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
+
     /**
      * v1) 게시물 상세 조회
      * @param postingId
