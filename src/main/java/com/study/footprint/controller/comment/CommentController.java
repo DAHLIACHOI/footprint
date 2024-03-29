@@ -9,10 +9,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -30,6 +27,15 @@ public class CommentController {
                                                                            @Valid @RequestBody UploadCommentReqDto uploadCommentReqDto) {
 
         SingleResult<UploadCommentResDto> result = commentService.uploadCommentV1(postingId, uploadCommentReqDto);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/v1/comment/{comment-id}")
+    public ResponseEntity<SingleResult<String>> deleteComment(@PathVariable("comment-id") Long commentId) {
+
+        SingleResult<String> result = commentService.deleteCommentV1(commentId);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
