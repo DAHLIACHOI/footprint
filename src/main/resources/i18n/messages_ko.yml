@@ -98,6 +98,10 @@ commentNotFound:
     code: "-4022"
     msg: "일치하는 댓글이 없습니다."
 
+likeNotFound:
+    code: "-4023"
+    msg: "일치하는 좋아요가 없습니다."
+
 redisError:
     code: "-5000"
     msg: "Redis 서버에 접속할 수 없습니다."
