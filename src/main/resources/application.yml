@@ -21,6 +21,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_batch_fetch_size: 1000
   mvc:
     path match:
       matching-strategy: ant_path_matcher

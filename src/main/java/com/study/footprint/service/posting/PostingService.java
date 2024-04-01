@@ -11,8 +11,10 @@ import com.study.footprint.domain.member.MemberRepository;
 import com.study.footprint.domain.place.Place;
 import com.study.footprint.domain.posting.Posting;
 import com.study.footprint.domain.posting.PostingRepository;
+import com.study.footprint.dto.comment.response.GetCommentResDto;
 import com.study.footprint.dto.posting.request.UploadPostingReqDto;
 import com.study.footprint.dto.posting.response.GetPostingResDto;
+import com.study.footprint.dto.posting.response.GetPostingResDtoV2;
 import com.study.footprint.dto.posting.response.UploadPostingResDto;
 import com.study.footprint.service.common.ResponseService;
 import com.study.footprint.service.like.LikeService;
@@ -197,5 +199,43 @@ public class PostingService {
                 .build();
 
         return responseService.getSingleResult(getPostingResDto);
+    }
+
+    /**
+     * v2) 게시물 상세 조회 (fetch join 이용)
+     * @param postingId
+     * @return
+     */
+    public SingleResult<GetPostingResDtoV2> getPostingV2(Long postingId) {
+        Posting posting = postingRepository.findByIdFetch(postingId)
+                .orElseThrow(() -> new CommonNotFoundException("postingNotFound"));
+        Member member = findLoginMember();
+
+        List<GetCommentResDto> commentList =
+                posting.getComments().stream()
+                        .map(comment -> GetCommentResDto.builder()
+                                .commentId(comment.getId())
+                                .content(comment.getContent())
+                                .nickname(comment.getMember().getNickname())
+                                .build())
+                        .toList();
+
+        GetPostingResDtoV2 getPostingResDtoV2 = GetPostingResDtoV2.builder()
+                .postingId(posting.getId())
+                .recordDate(posting.getRecordDate())
+                .title(posting.getTitle())
+                .content(posting.getContent())
+                .imageUrl(posting.getImageUrl())
+                .placeName(posting.getPlace().getName())
+                .likes(likeService.getLikeCount(posting))
+                .nickName(posting.getMember().getNickname())
+                .commentList(commentList)
+                .commentNum((long) commentList.size())
+                .isLike(likeService.getIsLike(posting, member))
+                .build();
+
+        return responseService.getSingleResult(getPostingResDtoV2);
+
+
     }
 }

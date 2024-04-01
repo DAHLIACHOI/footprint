@@ -5,6 +5,7 @@ import com.study.footprint.config.ConfigUtil;
 import com.study.footprint.config.s3.S3Service;
 import com.study.footprint.dto.posting.request.UploadPostingReqDto;
 import com.study.footprint.dto.posting.response.GetPostingResDto;
+import com.study.footprint.dto.posting.response.GetPostingResDtoV2;
 import com.study.footprint.dto.posting.response.UploadPostingResDto;
 import com.study.footprint.service.posting.PostingService;
 import jakarta.validation.Valid;
@@ -100,6 +101,19 @@ public class PostingController {
     public ResponseEntity<SingleResult<GetPostingResDto>> getPostingV1(@PathVariable("posting-id") Long postingId) {
 
         SingleResult<GetPostingResDto> result = postingService.getPostingV1(postingId);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * v2) 게시물 상세 조회
+     * @param postingId
+     * @return
+     */
+    @GetMapping("/v2/posting/{posting-id}")
+    public ResponseEntity<SingleResult<GetPostingResDtoV2>> getPostingV2(@PathVariable("posting-id") Long postingId) {
+
+        SingleResult<GetPostingResDtoV2> result = postingService.getPostingV2(postingId);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
