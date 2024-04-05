@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.Objects;
 
 @Builder
-public record GetAllPlaceResDto (
+public record GetPlaceResDto(
         Long placeId,
         Double latitude,
         Double longitude
@@ -16,7 +16,7 @@ public record GetAllPlaceResDto (
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GetAllPlaceResDto that = (GetAllPlaceResDto) o;
+        GetPlaceResDto that = (GetPlaceResDto) o;
         return Objects.equals(placeId, that.placeId);
     }
 

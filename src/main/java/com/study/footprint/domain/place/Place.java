@@ -1,5 +1,6 @@
 package com.study.footprint.domain.place;
 
+import com.study.footprint.common.converter.CityTypeCdConverter;
 import com.study.footprint.common.converter.common.CityTypeCd;
 import com.study.footprint.domain.BaseEntity;
 import com.study.footprint.domain.posting.Posting;
@@ -29,6 +30,7 @@ public class Place extends BaseEntity {
 
     private Double longitude;
 
+    @Convert(converter = CityTypeCdConverter.class)
     private CityTypeCd cityTypeCd;
 
     private Boolean isPosting;
