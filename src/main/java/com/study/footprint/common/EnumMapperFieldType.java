@@ -2,6 +2,6 @@ package com.study.footprint.common;
 
 public interface EnumMapperFieldType {
 
-    int getCode();
+    String getCode();
     String getName();
 }
