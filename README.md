@@ -42,6 +42,7 @@
 | 게시글 등록 | POST | /v3/posting |
 | 좋아요 등록 및 삭제 | POST | /v1/like/{posting-id} |
 | 댓글 등록 | POST | /v1/comment/{posting-id} |
+| 댓글 삭제 | DELETE | /v1/comment/{comment-id} |
 | 모든 발자취(위치) 조회 | GET | /v1/places |
 | 모든 발자취(위치) 조회 | GET | /v2/places |
 
