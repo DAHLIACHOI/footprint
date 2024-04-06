@@ -9,10 +9,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -56,32 +53,33 @@ public class LikeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+
     /**
-     * v2 ) 좋아요가 안 눌려있으면 등록, 눌려있다면 취소
-     * @param postingId
-     * @return SingleResult<ClickLikeResDto> isLike(좋아요 상태) (true, false)
+     * 좋아요 클릭
+     * 첫번째 clickLike에서 등록이랑, 삭제 api 분리
      */
     @PostMapping("/v2/like/{posting-id}")
-    public ResponseEntity<SingleResult<ClickLikeResDto>> clickLikeV2(@PathVariable("posting-id") Long postingId) {
+    public ResponseEntity<SingleResult<ClickLikeResDto>> createLike(@PathVariable("posting-id") Long postingId) {
 
         Long userId = configUtil.getLoginUserId();
 
-        SingleResult<ClickLikeResDto> result = likeService.clickLikeV2(postingId, userId);
+        SingleResult<ClickLikeResDto> result = likeService.createLike(postingId, userId);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /**
-     * 테스트를 위한 api (좋아요 수 누적시키기 위함)
+     * 좋아요 취소
+     * 첫번째 clickLike에서 등록이랑, 삭제 api 분리
      */
-    @PostMapping("/test/like/{posting-id}")
-    public ResponseEntity<HttpStatus> testClickLike(@PathVariable("posting-id") Long postingId) {
+    @DeleteMapping("/v2/like/{posting-id}")
+    public ResponseEntity<SingleResult<ClickLikeResDto>> deleteLike(@PathVariable("posting-id") Long postingId) {
 
         Long userId = configUtil.getLoginUserId();
 
-        likeService.testClickLike(postingId, userId);
+        SingleResult<ClickLikeResDto> result = likeService.deleteLike(postingId, userId);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 

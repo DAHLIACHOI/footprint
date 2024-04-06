@@ -1,13 +1,15 @@
 package com.study.footprint.controller.place;
 
+import com.study.footprint.common.converter.common.CityTypeCd;
 import com.study.footprint.common.response.ListResult;
 import com.study.footprint.config.ConfigUtil;
-import com.study.footprint.dto.place.response.GetAllPlaceResDto;
+import com.study.footprint.dto.place.response.GetPlaceResDto;
 import com.study.footprint.service.place.PlaceService;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -30,9 +32,9 @@ public class PlaceController {
      * @return
      */
     @GetMapping("/v1/places")
-    public ResponseEntity<ListResult<GetAllPlaceResDto>> getAllPlacesV1() {
+    public ResponseEntity<ListResult<GetPlaceResDto>> getAllPlacesV1() {
 
-        ListResult<GetAllPlaceResDto> result = placeService.getAllPlacesV1();
+        ListResult<GetPlaceResDto> result = placeService.getAllPlacesV1();
 
         return ResponseEntity.ok(result);
     }
@@ -43,10 +45,22 @@ public class PlaceController {
      * @return
      */
     @GetMapping("/v2/places")
-    public ResponseEntity<ListResult<GetAllPlaceResDto>> getAllPlacesV2() {
+    public ResponseEntity<ListResult<GetPlaceResDto>> getAllPlacesV2() {
 
         Long memberId = configUtil.getLoginUserId();
-        ListResult<GetAllPlaceResDto> result = placeService.getAllPlacesV2(memberId);
+        ListResult<GetPlaceResDto> result = placeService.getAllPlacesV2(memberId);
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * v1) 특정 지역 발자취 조회
+     * 기존 버전은 string으로 받았는데, 리팩토링 버전은 enum으로 받음
+     */
+    @GetMapping("/v1/places/{city}")
+    public ResponseEntity<ListResult<GetPlaceResDto>> getPlacesByCityV1(@PathVariable("city") CityTypeCd city) {
+
+        ListResult<GetPlaceResDto> result = placeService.getPlacesByCityV1(city);
 
         return ResponseEntity.ok(result);
     }

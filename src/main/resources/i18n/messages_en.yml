@@ -94,6 +94,14 @@ postingNotFound:
     code: "-4021"
     msg: "Posting information does not exist."
 
+commentNotFound:
+    code: "-4022"
+    msg: "Comment information does not exist."
+
+likeNotFound:
+    code: "-4023"
+    msg: "Like information does not exist."
+
 redisError:
     code: "-5000"
     msg: "Cannot connect to the Redis server."

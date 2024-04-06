@@ -69,4 +69,15 @@ public class CommentService {
 
         return responseService.getSingleResult(uploadCommentResDto);
     }
+
+    @Transactional
+    public SingleResult<String> deleteCommentV1(Long commentId) {
+        Member member = findLoginMember();
+        Comment comment = commentRepository.findByIdAndMember(commentId, member)
+                .orElseThrow(() -> new CommonNotFoundException("commentNotFound"));
+
+        commentRepository.delete(comment);
+
+        return responseService.getSingleResult("success");
+    }
 }

@@ -12,7 +12,7 @@ import com.study.footprint.domain.place.PlaceRepository;
 import com.study.footprint.domain.posting.Posting;
 import com.study.footprint.domain.posting.PostingRepository;
 import com.study.footprint.dto.place.request.UploadPlaceReqDto;
-import com.study.footprint.dto.place.response.GetAllPlaceResDto;
+import com.study.footprint.dto.place.response.GetPlaceResDto;
 import com.study.footprint.service.common.ResponseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -79,7 +79,7 @@ public class PlaceService {
      * v1) 모든 발자취 조회
      * @return
      */
-    public ListResult<GetAllPlaceResDto> getAllPlacesV1() {
+    public ListResult<GetPlaceResDto> getAllPlacesV1() {
 
         // 현재 로그인 한 멤버 정보 조회
         Member member = findMemberById(configUtil.getLoginUserId());
@@ -88,17 +88,17 @@ public class PlaceService {
         List<Posting> postings = postingRepository.findAllByMemberFetch(member);
 
         // 중복 제거를 위해 Set으로 변환
-        Set<GetAllPlaceResDto> getAllPlaceResDtoList = new HashSet<>();
+        Set<GetPlaceResDto> getPlaceResDtoList = new HashSet<>();
 
         for (Posting posting : postings) {
-            getAllPlaceResDtoList.add(GetAllPlaceResDto.builder()
+            getPlaceResDtoList.add(GetPlaceResDto.builder()
                     .placeId(posting.getPlace().getId())
                     .latitude(posting.getPlace().getLatitude())
                     .longitude(posting.getPlace().getLongitude())
                     .build());
         }
 
-        return responseService.getListResult(new ArrayList<>(getAllPlaceResDtoList));
+        return responseService.getListResult(new ArrayList<>(getPlaceResDtoList));
     }
 
     /**
@@ -108,7 +108,7 @@ public class PlaceService {
      * @return
      */
     @Cacheable(cacheNames = "all_place", key = "#memberId")
-    public ListResult<GetAllPlaceResDto> getAllPlacesV2(Long memberId) {
+    public ListResult<GetPlaceResDto> getAllPlacesV2(Long memberId) {
 
         // 현재 로그인 한 멤버 정보 조회
         Member member = findMemberById(memberId);
@@ -117,18 +117,47 @@ public class PlaceService {
         List<Posting> postings = postingRepository.findAllByMemberFetch(member);
 
         // 중복 제거를 위해 Set으로 변환
-        Set<GetAllPlaceResDto> getAllPlaceResDtoList = new HashSet<>();
+        Set<GetPlaceResDto> getPlaceResDtoList = new HashSet<>();
 
         for (Posting posting : postings) {
-            getAllPlaceResDtoList.add(GetAllPlaceResDto.builder()
+            getPlaceResDtoList.add(GetPlaceResDto.builder()
                     .placeId(posting.getPlace().getId())
                     .latitude(posting.getPlace().getLatitude())
                     .longitude(posting.getPlace().getLongitude())
                     .build());
         }
 
-        return responseService.getListResult(new ArrayList<>(getAllPlaceResDtoList));
+        return responseService.getListResult(new ArrayList<>(getPlaceResDtoList));
 
+    }
+
+    /**
+     * v1) 특정 지역 발자취 조회
+     *
+     * @param city
+     * @return
+     */
+    public ListResult<GetPlaceResDto> getPlacesByCityV1(CityTypeCd city) {
+
+        // 현재 로그인 한 멤버 정보 조회
+        Member member = findMemberById(configUtil.getLoginUserId());
+
+        CityTypeCd cityTypeCd = CityTypeCd.enumOf(city.getCode());
+
+        List<Posting> postings = postingRepository.findAllByMemberFetch(member);
+
+        Set<GetPlaceResDto> getPlaceResDtoList = new HashSet<>();
+
+        for (Posting posting : postings) {
+            if (posting.getPlace().getCityTypeCd().equals(cityTypeCd)) {
+                getPlaceResDtoList.add(GetPlaceResDto.builder()
+                        .placeId(posting.getPlace().getId())
+                        .latitude(posting.getPlace().getLatitude())
+                        .longitude(posting.getPlace().getLongitude())
+                        .build());
+            }
+        }
+        return responseService.getListResult(new ArrayList<>(getPlaceResDtoList));
     }
 
 

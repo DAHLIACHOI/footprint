@@ -1,10 +1,12 @@
 package com.study.footprint.domain.comment;
 
+import com.study.footprint.domain.member.Member;
 import com.study.footprint.domain.posting.Posting;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
@@ -17,4 +19,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
             "WHERE c.posting = :posting " +
             "ORDER BY c.createdDate DESC")
     List<GetCommentResDtoVo> findByPosting(Posting posting);
+
+    Optional<Comment> findByIdAndMember(Long commentId, Member member);
 }

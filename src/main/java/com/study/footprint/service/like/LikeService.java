@@ -83,13 +83,6 @@ public class LikeService {
     }
 
 
-    @Transactional
-    public SingleResult<ClickLikeResDto> clickLikeV2(Long postingId, Long userId) {
-        return null;
-    }
-
-
-
     public Boolean getIsLike(Posting posting, Member member) {
 
         return likeRepository.existsByPostingAndMember(posting, member);
@@ -102,11 +95,30 @@ public class LikeService {
     }
 
     @Transactional
-    public void testClickLike(Long postingId, Long userId) {
+    public SingleResult<ClickLikeResDto> createLike(Long postingId, Long userId) {
 
         likeRepository.save(Like.builder()
                 .member(findMemberById(userId))
                 .posting(findPostingById(postingId))
                 .build());
+
+        ClickLikeResDto clickLikeResDto = ClickLikeResDto.builder().isLike(true).build();
+
+        return responseService.getSingleResult(clickLikeResDto);
+    }
+
+    @Transactional
+    public SingleResult<ClickLikeResDto> deleteLike(Long PostingId, Long userId) {
+        Member member = findMemberById(userId);
+        Posting posting = findPostingById(PostingId);
+
+        Like like = likeRepository.findByPostingAndMember(posting, member)
+                .orElseThrow(() -> new CommonNotFoundException("likeNotFound"));
+
+        likeRepository.delete(like);
+
+        ClickLikeResDto clickLikeResDto = ClickLikeResDto.builder().isLike(false).build();
+
+        return responseService.getSingleResult(clickLikeResDto);
     }
 }
