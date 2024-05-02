@@ -21,7 +21,6 @@
 - [게시글 등록하면서 리팩토링한 부분](https://github.com/DAHLIACHOI/TIL/blob/main/%EA%B0%9C%EB%B0%9C/%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/'%EB%8B%B9%EC%8B%A0%EC%9D%98%20%EB%B0%9C%EC%9E%90%EC%B7%A8'%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%97%85%EB%A1%9C%EB%93%9C%20%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81.md)
 - [Optional 클래스의 orElse와 orElseGet 차이](https://dahliachoi.tistory.com/109)
 - [N+1 문제와 fetch join 해결 및 테스트](https://dahliachoi.tistory.com/110)
-- [Spring Cache 적용(조회 성능 개선)](https://dahliachoi.tistory.com/112)
 - [HashCode와 equals 오버라이딩](https://dahliachoi.tistory.com/113)
 
 <br>
