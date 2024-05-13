@@ -23,6 +23,7 @@
 - [N+1 문제와 fetch join 해결 및 테스트](https://dahliachoi.tistory.com/110)
 - [HashCode와 equals 오버라이딩](https://dahliachoi.tistory.com/113)
 - [Spring Cache 적용(조회 성능 개선)](https://dahliachoi.tistory.com/112)
+- [enum을 사용한 하드 코딩 개선](https://github.com/DAHLIACHOI/TIL/blob/main/%EA%B0%9C%EB%B0%9C/%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/%ED%95%98%EB%93%9C%20%EC%BD%94%EB%94%A9%20%EA%B0%9C%EC%84%A0.md)
 
 
 <br>
