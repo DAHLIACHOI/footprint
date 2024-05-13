@@ -22,6 +22,8 @@
 - [Optional 클래스의 orElse와 orElseGet 차이](https://dahliachoi.tistory.com/109)
 - [N+1 문제와 fetch join 해결 및 테스트](https://dahliachoi.tistory.com/110)
 - [HashCode와 equals 오버라이딩](https://dahliachoi.tistory.com/113)
+- [Spring Cache 적용(조회 성능 개선)](https://dahliachoi.tistory.com/112)
+
 
 <br>
 
@@ -44,6 +46,7 @@
 | 댓글 삭제 | DELETE | /v1/comment/{comment-id} |
 | 모든 발자취(위치) 조회 | GET | /v1/places |
 | 모든 발자취(위치) 조회 | GET | /v2/places |
+| 특정 지역 발자취(위치) 조회 |  GET | /v1/places/{city} |
 
 <br>
 
