@@ -55,8 +55,8 @@
 | 모든 발자취(위치) 조회 | GET | /v1/places |
 | 모든 발자취(위치) 조회 | GET | /v2/places |
 | 특정 지역 발자취(위치) 조회 |  GET | /v1/places/{city} |
-| 특정 게시글 조회 | GET | /v1/posting/{posting-id} |
-| 특정 게시글 조회 | GET | /v2/posting/{posting-id} |
+| 게시글 상세 조회 | GET | /v1/posting/{posting-id} |
+| 게시글 상세 조회 | GET | /v2/posting/{posting-id} |
 
 <br>
 
