@@ -33,6 +33,13 @@
 <img src="https://img.shields.io/badge/mariadb-003545?style=for-the-badge&logo=mariadb&logoColor=white"> <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"> 
 <br>
 
+### 🗺️ ERD
+![당발 리팩터링](https://github.com/DAHLIACHOI/footprint/assets/48826098/d251b5db-021a-4db5-9281-1e30f9602771)
+> 확장하면서 추가 예정
+
+<br>
+
+
 ### 📄 API 명세서
 | 기능 | Method | URI |
 | :---: | :---: | :---: |
