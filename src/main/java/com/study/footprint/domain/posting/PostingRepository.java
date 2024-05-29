@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface PostingRepository extends JpaRepository<Posting, Long> {
 
-    @Query("select p from Posting p left join fetch p.place where p.member = :member")
+    @Query("select p from Posting p left join fetch p.place where p.member = :member and p.isPosting = true")
     List<Posting> findAllByMemberFetch(Member member);
 
-    @Query("select p from Posting p join fetch p.member left join fetch p.comments where p.id = :postingId")
+    @Query("select p from Posting p join fetch p.member left join fetch p.comments where p.id = :postingId and p.isPosting = true")
     Optional<Posting> findByIdFetch(Long postingId);
 }
